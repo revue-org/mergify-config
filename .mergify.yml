@@ -1,11 +1,18 @@
 pull_request_rules:
-  - name: Automatic update of outdated branches
+  - name: Automatic update of outdated branches with merge strategy
     conditions:
       - -conflict
       - -draft
-      - label="keep-up-to-date"
+      - label="automerge-update"
     actions:
       update:
+  - name: Automatic update of outdated branches with rebase strategy
+    conditions:
+      - -conflict
+      - -draft
+      - label="autorebase-update"
+    actions:
+      rebase:
   - name: Ask PR author to kindly resolve conflicts
     conditions:
       - conflict
