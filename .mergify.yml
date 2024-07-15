@@ -1,0 +1,16 @@
+pull_request_rules:
+  - name: Automatic update of outdated branches
+    conditions:
+      - -conflict
+      - -draft
+      - label="keep-up-to-date"
+    actions:
+      update:
+  - name: Ask PR author to kindly resolve conflicts
+    conditions:
+      - conflict
+    actions:
+      comment:
+        message: |
+          Hey @{{author}}, unfortunately this PRs has some conflicts... :disappointed:
+          Could you please fix them? Thks :kissing_heart:
