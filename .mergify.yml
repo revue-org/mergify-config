@@ -21,5 +21,19 @@ pull_request_rules:
     actions:
       comment:
         message: |
-          Hey @{{author}}, unfortunately this PRs has some conflicts... :disappointed:
+          Hey @{{author}}, unfortunately this PR has some conflicts... :disappointed:
           Could you please fix them? Thks :kissing_heart:
+  - name: Rebase new updates on passing CI
+    conditions:
+      - and:
+          - author=renovate[bot]
+          - or:
+              - check-success=success
+              - check-skipped=success
+              - check-neutral=success
+          - label=dependecies
+          - -conflict
+          - -draft
+    actions:
+      merge:
+        method: rebase
