@@ -23,17 +23,20 @@ pull_request_rules:
         message: |
           Hey @{{author}}, unfortunately this PR has some conflicts... :disappointed:
           Could you please fix them? Thks :kissing_heart:
-  - name: Rebase new updates on passing CI
-    conditions:
-      - and:
-          - author=renovate[bot]
-          - or:
-              - check-success=success
-              - check-skipped=success
-              - check-neutral=success
-          - label=dependencies
-          - -conflict
-          - -draft
-    actions:
-      merge:
-        method: rebase
+queue_rules:
+  - name: Rebase Renovate PRs
+    queue_conditions:
+      - author=renovate[bot]
+      - label=dependencies
+      - -conflict
+      - -draft
+    merge_conditions:
+      - or:
+          - check-success=success
+          - check-skipped=success
+          - check-neutral=success
+    batch_size: 5
+    speculative_checks: 5
+    batch_max_wait_time: "3 min"
+    queue_branch_prefix: mergify/renovate/
+    merge_method: rebase
