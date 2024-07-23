@@ -40,3 +40,14 @@ queue_rules:
     batch_max_wait_time: "3 min"
     queue_branch_prefix: mergify/renovate/
     merge_method: rebase
+merge_protections:
+  - name: Developer PR
+    description: Rule to follow in order to successfully merge to main
+    if:
+      - base=main
+      - "-author=renovate[bot]"
+    success_conditions:
+      - >-
+        title ~=
+        ^(fix|feat|docs|style|refactor|perf|test|build|ci|chore|revert)(?:(.+))?:
+      - "#approved-reviews-by>=2"
