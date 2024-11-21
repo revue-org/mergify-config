@@ -36,7 +36,6 @@ queue_rules:
           - check-skipped=success
           - check-neutral=success
     batch_size: 5
-    speculative_checks: 5
     batch_max_wait_time: "3 min"
     queue_branch_prefix: mergify/renovate/
     merge_method: rebase
@@ -51,3 +50,6 @@ merge_protections:
         title ~=
         ^(fix|feat|docs|style|refactor|perf|test|build|ci|chore|revert)(?:(.+))?:
       - "#approved-reviews-by>=1"
+
+merge_queue:
+  max_parallel_checks: 5
